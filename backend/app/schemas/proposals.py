@@ -60,7 +60,7 @@ class ProposalContent(BaseModel):
 
     hookLine: str
     proposal: str
-    clientQuestions: tuple[str, str]
+    clientQuestions: list[str]
 
     @field_validator("hookLine", "proposal")
     @classmethod
@@ -72,11 +72,11 @@ class ProposalContent(BaseModel):
 
     @field_validator("clientQuestions")
     @classmethod
-    def ensure_questions(cls, value: tuple[str, str]) -> tuple[str, str]:
-        normalized = tuple(question.strip() for question in value if question.strip())
+    def ensure_questions(cls, value: list[str]) -> list[str]:
+        normalized = [question.strip() for question in value if question.strip()]
         if len(normalized) != 2:
             raise ValueError("Exactly two client questions are required.")
-        return normalized  # type: ignore[return-value]
+        return normalized
 
 
 class ProposalGenerationResponse(ProposalContent):
