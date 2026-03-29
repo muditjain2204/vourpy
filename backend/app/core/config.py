@@ -12,7 +12,11 @@ class Settings(BaseSettings):
     api_v1_prefix: str = "/api/v1"
     openai_api_key: str | None = None
     openai_model: str = "gpt-5.4"
-    backend_cors_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
+    backend_cors_origins: list[str] = Field(default_factory=lambda: [
+        "http://localhost:5173",
+        "http://localhost:8001",
+        "https://vourpy.vercel.app",
+    ])
     log_level: str = "INFO"
 
     @field_validator("backend_cors_origins", mode="before")
